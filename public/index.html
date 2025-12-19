@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOX SHOP PG</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>FOX SHOP</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#home" class="active"><i class="fas fa-home"></i> Beranda</a>
+                <a href="#products"><i class="fas fa-box"></i> Produk</a>
+                <a href="#cart"><i class="fas fa-shopping-cart"></i> Keranjang</a>
+                <a href="#orders"><i class="fas fa-history"></i> Pesanan</a>
+                <a href="#voucher"><i class="fas fa-ticket-alt"></i> Voucher</a>
+            </nav>
+            
+            <div class="user-info">
+                <div class="balance">
+                    <i class="fas fa-wallet"></i>
+                    <span id="user-balance">Rp 0</span>
+                </div>
+                <div class="user-dropdown">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="user-email">user@example.com</div>
+                        <a href="#profile"><i class="fas fa-user-circle"></i> Profil</a>
+                        <a href="#topup"><i class="fas fa-coins"></i> Top Up Saldo</a>
+                        <a href="#transactions"><i class="fas fa-exchange-alt"></i> Transaksi</a>
+                        <div class="divider"></div>
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="admin.html" class="admin-link" id="admin-link"><i class="fas fa-crown"></i> Admin Panel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login ke FOXSHOP</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" placeholder="masukkan email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="password" placeholder="masukkan password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <p class="register-text">Belum punya akun? <a href="#" id="register-link">Daftar disini</a></p>
+                </form>
+                
+                <form id="register-form" class="hidden">
+                    <div class="form-group">
+                        <label for="reg-name"><i class="fas fa-user"></i> Nama Lengkap</label>
+                        <input type="text" id="reg-name" placeholder="masukkan nama lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="reg-email" placeholder="masukkan email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="reg-password" placeholder="buat password (min. 6 karakter)" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-user-plus"></i> Daftar
+                    </button>
+                    <p class="register-text">Sudah punya akun? <a href="#" id="login-link">Login disini</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- GANTI MODAL INI DI index.html -->
+<div id="payment-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Instruksi Transfer</h2>
+            <span class="close-payment-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="payment-process">
+                <div class="payment-step active" id="step-method">
+                    <h3>Transfer ke:</h3>
+                    <div class="transfer-instructions" id="transfer-instructions">
+                        <!-- Instruksi akan diisi oleh JavaScript -->
+                        <p>Silakan pilih metode transfer terlebih dahulu</p>
+                    </div>
+                    
+                    <div class="payment-details">
+                        <div class="detail-item">
+                            <span>Jumlah Top Up:</span>
+                            <span id="payment-amount">Rp 0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Total yang harus dibayar:</span>
+                            <span id="payment-total">Rp 0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Kode Unik:</span>
+                            <span id="payment-unique-code">000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-proof">
+                        <h4>Upload Bukti Transfer</h4>
+                        <input type="file" id="proof-upload" accept="image/*,.pdf">
+                        <button id="submit-proof" class="btn-secondary">
+                            <i class="fas fa-upload"></i> Upload Bukti
+                        </button>
+                        <div id="proof-preview" class="hidden"></div>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4><i class="fas fa-info-circle"></i> Catatan Penting:</h4>
+                        <ul>
+                            <li>Saldo akan ditambahkan setelah bukti transfer diverifikasi oleh admin</li>
+                            <li>Proses verifikasi maksimal 1x24 jam</li>
+                            <li>Pastikan transfer sesuai dengan jumlah total</li>
+                            <li>Simpan bukti transfer Anda</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="payment-step" id="step-success">
+                    <div class="success-animation">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Bukti Transfer Terkirim!</h3>
+                    <p>Admin akan memverifikasi pembayaran Anda</p>
+                    <div class="success-details">
+                        <div class="detail-item">
+                            <span>Jumlah Top Up:</span>
+                            <span id="success-amount">Rp 0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Metode:</span>
+                            <span id="success-method">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Waktu:</span>
+                            <span id="success-time">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span>Status:</span>
+                            <span class="status-pending">Menunggu Verifikasi</span>
+                        </div>
+                    </div>
+                    <button id="finish-payment" class="btn-primary">
+                        <i class="fas fa-check"></i> Selesai
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Voucher Modal -->
+    <div id="voucher-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tukar Voucher</h2>
+                <span class="close-voucher-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="voucher-input">
+                    <input type="text" id="voucher-code" placeholder="Masukkan kode voucher">
+                    <button id="redeem-voucher" class="btn-primary">
+                        <i class="fas fa-gift"></i> Tukar Voucher
+                    </button>
+                </div>
+                <div class="my-vouchers">
+                    <h3>Voucher Saya</h3>
+                    <div id="voucher-list">
+                        <!-- Voucher akan ditampilkan di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Katalog Produk <span class="highlight">Digital</span></h1>
+                <p>Temukan produk digital terbaik dengan sistem pembayaran yang aman dan mudah</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <i class="fas fa-box-open"></i>
+                        <span class="count">150+</span>
+                        <span class="label">Produk</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-users"></i>
+                        <span class="count">2.5K+</span>
+                        <span class="label">Pengguna</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="count">98%</span>
+                        <span class="label">Kepuasan</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+        </section>
+
+<!-- GANTI SECTION INI DI index.html -->
+<section id="topup-section" class="section">
+    <h2 class="section-title"><i class="fas fa-coins"></i> Top Up Saldo</h2>
+    <div class="topup-options">
+        <div class="topup-option" data-amount="10000">
+            <div class="topup-amount">Rp 10.000</div>
+            <div class="topup-bonus">+ Bonus Rp 500</div>
+        </div>
+        <div class="topup-option" data-amount="25000">
+            <div class="topup-amount">Rp 25.000</div>
+            <div class="topup-bonus">+ Bonus Rp 1.500</div>
+        </div>
+        <div class="topup-option active" data-amount="50000">
+            <div class="topup-amount">Rp 50.000</div>
+            <div class="topup-bonus">+ Bonus Rp 3.000</div>
+        </div>
+        <div class="topup-option" data-amount="100000">
+            <div class="topup-amount">Rp 100.000</div>
+            <div class="topup-bonus">+ Bonus Rp 7.000</div>
+        </div>
+        <div class="topup-option" data-amount="250000">
+            <div class="topup-amount">Rp 250.000</div>
+            <div class="topup-bonus">+ Bonus Rp 20.000</div>
+        </div>
+    </div>
+    
+    <div class="custom-topup">
+        <input type="number" id="custom-amount" placeholder="Masukkan jumlah custom (min. 10.000)">
+        <button id="custom-topup-btn" class="btn-secondary">
+            <i class="fas fa-plus-circle"></i> Top Up Custom
+        </button>
+    </div>
+    
+    <div class="payment-gateway">
+        <h3>Pilih Metode Transfer</h3>
+        <div class="payment-methods">
+            <div class="payment-method" data-method="dana">
+                <i class="fab fa-d-and-d"></i>
+                <span>DANA</span>
+            </div>
+            <div class="payment-method" data-method="gopay">
+                <i class="fab fa-google-wallet"></i>
+                <span>Gopay</span>
+            </div>
+            <div class="payment-method" data-method="bri">
+                <i class="fas fa-university"></i>
+                <span>BRI</span>
+            </div>
+            <div class="payment-method" data-method="bca">
+                <i class="fas fa-landmark"></i>
+                <span>BCA</span>
+            </div>
+            <div class="payment-method" data-method="nobu">
+                <i class="fas fa-piggy-bank"></i>
+                <span>NOBU</span>
+            </div>
+            <div class="payment-method" data-method="bsi">
+                <i class="fas fa-mosque"></i>
+                <span>BSI</span>
+            </div>
+            <div class="payment-method" data-method="jatim">
+                <i class="fas fa-building"></i>
+                <span>Bank Jatim</span>
+            </div>
+        </div>
+        
+        <button id="process-payment" class="btn-primary">
+            <i class="fas fa-wallet"></i> Lihat Instruksi Transfer
+        </button>
+    </div>
+</section>
+            
+            <div class="custom-topup">
+                <input type="number" id="custom-amount" placeholder="Masukkan jumlah custom (min. 10.000)">
+                <button id="custom-topup-btn" class="btn-secondary">
+                    <i class="fas fa-plus-circle"></i> Top Up Custom
+                </button>
+            </div>
+            
+        <h3>Pilih Metode Transfer</h3>
+        <div class="payment-methods">
+            <div class="payment-method" data-method="dana">
+                <i class="fab fa-d-and-d"></i>
+                <span>DANA</span>
+            </div>
+            <div class="payment-method" data-method="gopay">
+                <i class="fab fa-google-wallet"></i>
+                <span>Gopay</span>
+            </div>
+            <div class="payment-method" data-method="bri">
+                <i class="fas fa-university"></i>
+                <span>BRI</span>
+            </div>
+            <div class="payment-method" data-method="bca">
+                <i class="fas fa-landmark"></i>
+                <span>BCA</span>
+            </div>
+            <div class="payment-method" data-method="nobu">
+                <i class="fas fa-piggy-bank"></i>
+                <span>NOBU</span>
+            </div>
+            <div class="payment-method" data-method="bsi">
+                <i class="fas fa-mosque"></i>
+                <span>BSI</span>
+            </div>
+            <div class="payment-method" data-method="jatim">
+                <i class="fas fa-building"></i>
+                <span>Bank Jatim</span>
+            </div>
+        </div>
+        
+        <button id="process-payment" class="btn-primary">
+            <i class="fas fa-wallet"></i> Lihat Instruksi Transfer
+        </button>
+    </div>
+</section>
+
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <h2 class="section-title"><i class="fas fa-box"></i> Katalog Produk</h2>
+            <div class="products-filter">
+                <button class="filter-btn active" data-category="all">Semua</button>
+                <button class="filter-btn" data-category="Software">Script</button>
+                <button class="filter-btn" data-category="Game">tols</button>
+                <button class="filter-btn" data-category="Template">code</button>
+                <button class="filter-btn" data-category="Lainnya">jasa</button>
+            </div>
+            
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart" class="section hidden">
+            <h2 class="section-title"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Keranjang belanja Anda kosong</p>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <h3>Ringkasan Belanja</h3>
+                    <div class="voucher-apply">
+                        <input type="text" id="apply-voucher" placeholder="Masukkan kode voucher">
+                        <button id="apply-voucher-btn" class="btn-secondary">Gunakan</button>
+                    </div>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">Rp 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Diskon Voucher</span>
+                        <span id="cart-discount">Rp 0</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="cart-total">Rp 0</span>
+                    </div>
+                    <button id="checkout-btn" class="btn-primary" disabled>
+                        <i class="fas fa-credit-card"></i> Checkout
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders" class="section hidden">
+            <h2 class="section-title"><i class="fas fa-history"></i> Riwayat Pesanan</h2>
+            <div class="orders-container" id="orders-container">
+                <!-- Orders will be loaded here -->
+                <div class="empty-orders">
+                    <i class="fas fa-history"></i>
+                    <p>Belum ada pesanan</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voucher Section -->
+        <section id="voucher" class="section hidden">
+            <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Voucher Saya</h2>
+            <div class="voucher-container">
+                <button id="open-voucher-modal" class="btn-primary">
+                    <i class="fas fa-gift"></i> Tukar Voucher
+                </button>
+                <div class="vouchers-grid" id="user-vouchers">
+                    <!-- User vouchers will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-cube"></i>
+                        <span>FOX SHOP</span>
+                    </div>
+                    <p>Platform katalog produk digital dengan sistem pembayaran terintegrasi.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <p><i class="fas fa-envelope"></i>@fox_xcode</p>
+                    <p><i class="fas fa-phone"></i> +62 812 25109623</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Metode Pembayaran</h3>
+                    <div class="payment-icons">
+                        <i class="fas fa-qrcode"></i>
+                        <i class="fab fa-google-wallet"></i>
+                        <i class="fas fa-university"></i>
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FOX SHOP All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
