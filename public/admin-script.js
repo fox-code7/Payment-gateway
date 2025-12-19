@@ -72,23 +72,25 @@ verifyTopUp(transactionId) {
 
     // Check admin authentication
     checkAdminAuth() {
-        const currentUser = JSON.parse(localStorage.getItem('darkstore_currentUser') || 'null');
-        if (!currentUser || currentUser.role !== 'admin') {
-            alert('Akses ditolak! Hanya admin yang dapat mengakses panel ini.');
-            window.location.href = '../index.html';
-            return false;
-        }
-        return true;
+    // Cek apakah ada user yang login
+    const currentUser = JSON.parse(localStorage.getItem('darkstore_currentUser') || 'null');
+    
+    if (!currentUser) {
+        // Tampilkan modal login admin
+        document.getElementById('admin-login-modal').style.display = 'flex';
+        return false;
     }
     
-    // Format Rupiah
-    formatRupiah(amount) {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(amount);
+    if (currentUser.role !== 'admin') {
+        alert('Akses ditolak! Hanya admin yang dapat mengakses panel ini.');
+        window.location.href = '../index.html';
+        return false;
     }
+    
+    // Hide login modal jika sudah login sebagai admin
+    document.getElementById('admin-login-modal').style.display = 'none';
+    return true;
+}
     
     // Update dashboard stats
     updateDashboardStats() {
@@ -1078,6 +1080,62 @@ verifyTopUp(transactionId) {
             this.showNotification('Fitur notifikasi akan datang!', 'info');
         });
     }
+}
+
+setupAdminLogin() {
+    const adminLoginForm = document.getElementById('admin-login-form');
+    
+    if (adminLoginForm) {
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            
+            const users = this.dataManager.getUsers();
+            const adminUser = users.find(u => 
+                u.email === email && 
+                u.password === password && 
+                u.role === 'admin'
+            );
+            
+            if (adminUser) {
+                // Save as current user
+                localStorage.setItem('darkstore_currentUser', JSON.stringify(adminUser));
+                
+                // Hide login modal
+                document.getElementById('admin-login-modal').style.display = 'none';
+                
+                // Initialize admin panel
+                this.updateDashboardStats();
+                this.setupAdminNavigation();
+                this.setupModals();
+                this.setupBackupButtons();
+                
+                // Load initial data
+                this.loadProductsManagement();
+                this.loadUsersManagement();
+                this.loadOrdersManagement();
+                this.loadVouchersManagement();
+                this.loadLogs();
+                
+                this.showNotification('Login admin berhasil!', 'success');
+            } else {
+                this.showNotification('Email atau password admin salah', 'error');
+            }
+        });
+    }
+}
+
+// Update initAdmin function
+initAdmin() {
+    // Setup admin login first
+    this.setupAdminLogin();
+    
+    // Check auth
+    if (!this.checkAdminAuth()) return;
+    
+    // Continue with admin initialization...
 }
 
 // Initialize admin when DOM is ready
