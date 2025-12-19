@@ -48,50 +48,62 @@
         </div>
     </header>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Login ke FOXSHOP</h2>
-                <span class="close-modal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="email" placeholder="masukkan email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="password" placeholder="masukkan password" required>
-                    </div>
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                    <p class="register-text">Belum punya akun? <a href="#" id="register-link">Daftar disini</a></p>
-                </form>
-                
-                <form id="register-form" class="hidden">
-                    <div class="form-group">
-                        <label for="reg-name"><i class="fas fa-user"></i> Nama Lengkap</label>
-                        <input type="text" id="reg-name" placeholder="masukkan nama lengkap" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-email"><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" id="reg-email" placeholder="masukkan email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-password"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="reg-password" placeholder="buat password (min. 6 karakter)" required>
-                    </div>
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-user-plus"></i> Daftar
-                    </button>
-                    <p class="register-text">Sudah punya akun? <a href="#" id="login-link">Login disini</a></p>
-                </form>
-            </div>
+    <!-- GANTI MODAL LOGIN INI DI index.html -->
+<div id="login-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title">Login ke DarkStore</h2>
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" placeholder="masukkan email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="masukkan password" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <p class="auth-switch">
+                    Belum punya akun? 
+                    <a href="#" id="show-register">Daftar disini</a>
+                </p>
+            </form>
+            
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="reg-name"><i class="fas fa-user"></i> Nama Lengkap</label>
+                    <input type="text" id="reg-name" placeholder="masukkan nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="reg-email" placeholder="masukkan email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="reg-password" placeholder="buat password (min. 6 karakter)" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password"><i class="fas fa-lock"></i> Konfirmasi Password</label>
+                    <input type="password" id="reg-confirm-password" placeholder="konfirmasi password" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </button>
+                <p class="auth-switch">
+                    Sudah punya akun? 
+                    <a href="#" id="show-login">Login disini</a>
+                </p>
+            </form>
         </div>
     </div>
+</div>
 
     <!-- GANTI MODAL INI DI index.html -->
 <div id="payment-modal" class="modal">
@@ -310,43 +322,36 @@
                 </button>
             </div>
             
-        <h3>Pilih Metode Transfer</h3>
-        <div class="payment-methods">
-            <div class="payment-method" data-method="dana">
-                <i class="fab fa-d-and-d"></i>
-                <span>DANA</span>
+            <div class="payment-gateway">
+                <h3>Pilih Metode Pembayaran</h3>
+                <div class="payment-methods">
+                    <div class="payment-method" data-method="qris">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QRIS</span>
+                    </div>
+                   <div class="payment-method" data-method="Dana">
+                        <i class="fab fa-google-wallet"></i>
+                        <span>Dana</span>
+                    </div>
+                     <div class="payment-method" data-method="gopay">
+                        <i class="fab fa-google-wallet"></i>
+                        <span>Gopay</span>
+                    </div>
+                    <div class="payment-method" data-method="bank">
+                        <i class="fas fa-university"></i>
+                        <span>Transfer Bank</span>
+                    </div>
+                    <div class="payment-method" data-method="virtual">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Virtual Account</span>
+                    </div>
+                </div>
+                
+                <button id="process-payment" class="btn-primary">
+                    <i class="fas fa-lock"></i> Lanjutkan Pembayaran
+                </button>
             </div>
-            <div class="payment-method" data-method="gopay">
-                <i class="fab fa-google-wallet"></i>
-                <span>Gopay</span>
-            </div>
-            <div class="payment-method" data-method="bri">
-                <i class="fas fa-university"></i>
-                <span>BRI</span>
-            </div>
-            <div class="payment-method" data-method="bca">
-                <i class="fas fa-landmark"></i>
-                <span>BCA</span>
-            </div>
-            <div class="payment-method" data-method="nobu">
-                <i class="fas fa-piggy-bank"></i>
-                <span>NOBU</span>
-            </div>
-            <div class="payment-method" data-method="bsi">
-                <i class="fas fa-mosque"></i>
-                <span>BSI</span>
-            </div>
-            <div class="payment-method" data-method="jatim">
-                <i class="fas fa-building"></i>
-                <span>Bank Jatim</span>
-            </div>
-        </div>
-        
-        <button id="process-payment" class="btn-primary">
-            <i class="fas fa-wallet"></i> Lihat Instruksi Transfer
-        </button>
-    </div>
-</section>
+        </section>
 
         <!-- Products Section -->
         <section id="products" class="section">
