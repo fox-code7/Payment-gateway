@@ -9,6 +9,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+     <!-- TAMBAHKAN INI DI admin.html (sebelum </body>) -->
+<div id="admin-login-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Admin Login Required</h2>
+        </div>
+        <div class="modal-body">
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-email"><i class="fas fa-envelope"></i> Admin Email</label>
+                    <input type="email" id="admin-email" placeholder="admin@darkstore.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="admin-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Login sebagai Admin
+                </button>
+                <p style="text-align: center; margin-top: 15px;">
+                    <a href="../index.html" style="color: var(--primary-color);">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Toko
+                    </a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
     <!-- Admin Header -->
     <header class="admin-header">
         <div class="container">
