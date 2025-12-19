@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | FOX SHOP</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-logo">
+                <i class="fas fa-crown"></i>
+                <span>Admin Panel</span>
+            </div>
+            <nav class="admin-nav">
+                <a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#products"><i class="fas fa-box"></i> Produk</a>
+                <a href="#users"><i class="fas fa-users"></i> Pengguna</a>
+                <a href="#orders"><i class="fas fa-shopping-bag"></i> Pesanan</a>
+                <a href="#vouchers"><i class="fas fa-ticket-alt"></i> Voucher</a>
+                <a href="#transactions"><i class="fas fa-exchange-alt"></i> Transaksi</a>
+                <a href="../index.html" class="back-to-store"><i class="fas fa-store"></i> Kembali ke Toko</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Dashboard -->
+            <section id="dashboard" class="admin-section">
+                <h1 class="admin-title">Dashboard Admin</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Pengguna</h3>
+                            <span class="stat-number" id="total-users">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Produk</h3>
+                            <span class="stat-number" id="total-products">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Pesanan Hari Ini</h3>
+                            <span class="stat-number" id="today-orders">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Pendapatan</h3>
+                            <span class="stat-number" id="total-revenue">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="recent-orders">
+                        <h2>Pesanan Terbaru</h2>
+                        <div class="orders-table-container">
+                            <table class="orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Kode Pesanan</th>
+                                        <th>Pengguna</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-orders-body">
+                                    <!-- Data akan diisi oleh JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <h2>Quick Actions</h2>
+                        <div class="actions-grid">
+                            <button class="action-btn" id="add-product-btn">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Tambah Produk</span>
+                            </button>
+                            <button class="action-btn" id="create-voucher-btn">
+                                <i class="fas fa-gift"></i>
+                                <span>Buat Voucher</span>
+                            </button>
+                            <button class="action-btn" id="add-balance-btn">
+                                <i class="fas fa-coins"></i>
+                                <span>Tambah Saldo User</span>
+                            </button>
+                            <button class="action-btn" id="send-notif-btn">
+                                <i class="fas fa-bell"></i>
+                                <span>Kirim Notifikasi</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Products Management -->
+            <section id="products" class="admin-section hidden">
+                <div class="section-header">
+                    <h1 class="admin-title">Manajemen Produk</h1>
+                    <button class="btn-primary" id="add-new-product">
+                        <i class="fas fa-plus"></i> Tambah Produk Baru
+                    </button>
+                </div>
+                
+                <div class="products-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Users Management -->
+            <section id="users" class="admin-section hidden">
+                <div class="section-header">
+                    <h1 class="admin-title">Manajemen Pengguna</h1>
+                </div>
+                
+                <div class="users-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Saldo</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Orders Management -->
+            <section id="orders" class="admin-section hidden">
+                <div class="section-header">
+                    <h1 class="admin-title">Manajemen Pesanan</h1>
+                </div>
+                
+                <div class="orders-filter">
+                    <select id="order-status-filter">
+                        <option value="all">Semua Status</option>
+                        <option value="pending">Menunggu</option>
+                        <option value="processing">Diproses</option>
+                        <option value="completed">Selesai</option>
+                        <option value="cancelled">Dibatalkan</option>
+                    </select>
+                </div>
+                
+                <!-- GANTI tabel transaksi di admin.html -->
+             <table class="admin-table">
+                   <thead>
+                       <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Jumlah</th>
+            <th>Metode</th>
+            <th>Total Transfer</th>
+            <th>Kode Unik</th>
+            <th>Bukti</th>
+            <th>Status</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody id="transactions-table-body">
+        <!-- Data akan diisi -->
+    </tbody>
+</table>
+                </div>
+            </section>
+            
+            <!-- Vouchers Management -->
+            <section id="vouchers" class="admin-section hidden">
+                <div class="section-header">
+                    <h1 class="admin-title">Manajemen Voucher</h1>
+                    <button class="btn-primary" id="create-voucher">
+                        <i class="fas fa-plus"></i> Buat Voucher Baru
+                    </button>
+                </div>
+                
+                <div class="vouchers-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nilai</th>
+                                <th>Tipe</th>
+                                <th>Deskripsi</th>
+                                <th>Min. Belanja</th>
+                                <th>Maks. Penggunaan</th>
+                                <th>Digunakan</th>
+                                <th>Berlaku Hingga</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vouchers-table-body">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Transactions -->
+            <section id="transactions" class="admin-section hidden">
+                <div class="section-header">
+                    <h1 class="admin-title">Riwayat Transaksi</h1>
+                </div>
+                
+                <div class="transactions-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Kode Transaksi</th>
+                                <th>Pengguna</th>
+                                <th>Jumlah</th>
+                                <th>Tipe</th>
+                                <th>Metode</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal untuk Tambah/Edit Produk -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="product-modal-title">Tambah Produk Baru</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="product-form">
+                    <input type="hidden" id="product-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Nama Produk *</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Kategori *</label>
+                            <select id="product-category" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Software">Software</option>
+                                <option value="Game">Game</option>
+                                <option value="Template">Template</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Deskripsi *</label>
+                        <textarea id="product-description" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Harga (Rp) *</label>
+                            <input type="number" id="product-price" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-stock">Stok *</label>
+                            <input type="number" id="product-stock" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-image">Icon (Font Awesome Class)</label>
+                        <input type="text" id="product-image" placeholder="fas fa-box">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="product-active">
+                            <span>Aktif</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Buat Voucher -->
+    <div id="voucher-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Buat Voucher Baru</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="voucher-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="voucher-code">Kode Voucher *</label>
+                            <input type="text" id="voucher-code" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="voucher-value">Nilai *</label>
+                            <input type="number" id="voucher-value" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="voucher-type">Tipe *</label>
+                            <select id="voucher-type" required>
+                                <option value="fixed">Fixed Amount (Rp)</option>
+                                <option value="percentage">Percentage (%)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="voucher-max-usage">Maks. Penggunaan *</label>
+                            <input type="number" id="voucher-max-usage" min="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voucher-description">Deskripsi</label>
+                        <textarea id="voucher-description" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="voucher-min-purchase">Min. Belanja (Rp)</label>
+                            <input type="number" id="voucher-min-purchase" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="voucher-valid-until">Berlaku Hingga *</label>
+                            <input type="date" id="voucher-valid-until" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Batal</button>
+                        <button type="submit" class="btn-primary">Buat Voucher</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Tambah Saldo -->
+    <div id="balance-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Kelola Saldo Pengguna</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="balance-form">
+                    <div class="form-group">
+                        <label for="user-select">Pilih Pengguna *</label>
+                        <select id="user-select" required>
+                            <option value="">Pilih Pengguna</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="balance-action">Aksi *</label>
+                        <select id="balance-action" required>
+                            <option value="add">Tambah Saldo</option>
+                            <option value="subtract">Kurangi Saldo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="balance-amount">Jumlah (Rp) *</label>
+                        <input type="number" id="balance-amount" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="balance-reason">Alasan</label>
+                        <input type="text" id="balance-reason" placeholder="Contoh: Bonus referral">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary close-modal">Batal</button>
+                        <button type="submit" class="btn-primary">Proses</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Edit Status Pesanan -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Kelola Pesanan</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="order-details" id="order-details">
+                    <!-- Detail pesanan akan diisi di sini -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="order-status">Ubah Status *</label>
+                    <select id="order-status">
+                        <option value="pending">Menunggu</option>
+                        <option value="processing">Diproses</option>
+                        <option value="completed">Selesai</option>
+                        <option value="cancelled">Dibatalkan</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary close-modal">Batal</button>
+                    <button type="button" class="btn-primary" id="update-order-btn">Update Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
